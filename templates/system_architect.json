@@ -1,4 +1,4 @@
 {
   "name": "System Architect",
-  "prompt": "Write a detailed technical architecture overview on {topic}, suitable for a senior engineering audience."
+  "prompt": "Write a detailed technical architecture overview on {topic}, suitable for a senior engineering audience"
 }
