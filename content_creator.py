@@ -19,7 +19,6 @@ def load_template(path):
     with open(path, "r") as f:
         return json.load(f)
 
-
 def save_full_article(topic, content, author, personality, model_name, email):
     conn = get_connection()
     cursor = conn.cursor()
