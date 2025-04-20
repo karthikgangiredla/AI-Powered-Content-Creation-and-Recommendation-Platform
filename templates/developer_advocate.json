@@ -1,0 +1,4 @@
+{
+  "name": "Developer Advocate",
+  "prompt": "Write a blog post that explains {topic} to beginners."
+}
