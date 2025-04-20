@@ -1,25 +1,10 @@
-# Ignore Python cache
 __pycache__/
-
-# Ignore virtual environment
 venv/
-
-# Ignore environment variable files
 .env
-
-# Ignore database files
 *.sqlite3
-
-# Ignore Chroma DB storage folder
 chroma_storage/
-
-# Ignore Streamlit config files (optional)
 .streamlit/
-
-# Ignore VS Code settings (if any)
 .vscode/
-
-# Ignore logs and temporary files
 *.log
 *.tmp
 *.bak
