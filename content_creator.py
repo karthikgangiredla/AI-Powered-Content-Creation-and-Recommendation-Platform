@@ -21,10 +21,44 @@ def load_template(path):
     with open(path, "r") as f:
         return json.load(f)
 
-def save_article(title, content, author="Developer Advocate"):
+
+def save_full_article(topic, content, author, personality, model_name, email):
+
     conn = get_connection()
     cursor = conn.cursor()
-    query = "INSERT INTO articles (title, content, author) VALUES (%s, %s, %s)"
-    cursor.execute(query, (title, content, author))
+
+    cursor.execute("SELECT id FROM users WHERE username = %s", (author,))
+    user = cursor.fetchone()
+    if user:
+        uid = user[0]
+    else:
+        cursor.execute("INSERT INTO users (username, email) VALUES (%s, %s)", (author, email))
+        uid = cursor.lastrowid
+
+
+    cursor.execute("""
+        INSERT INTO articles (title, content, author)
+        VALUES (%s, %s, %s)
+    """, (topic, content, author))
+    article_id = cursor.lastrowid
+
+    cursor.execute("""
+        INSERT INTO article_revisions (article_id, version, content)
+        VALUES (%s, %s, %s)
+    """, (article_id, 1, content))
+
+    cursor.execute("""
+        INSERT INTO model_performance (model_name, personality, tokens_used, output_length)
+        VALUES (%s, %s, %s, %s)
+    """, (model_name, personality, 200, len(content)))
+
+    cursor.execute("""
+        INSERT INTO user_interactions (user_id, article_id, action)
+        VALUES (%s, %s, %s)
+    """, (uid, article_id, "generated"))
+
     conn.commit()
     conn.close()
+
+    embed_and_store(article_id=article_id, text=content, title=topic)
+    return article_id

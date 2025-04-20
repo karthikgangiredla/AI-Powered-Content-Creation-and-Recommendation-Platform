@@ -1,11 +1,20 @@
-from content_creator import generate_article, save_article
+from content_creator import generate_article, save_full_article
 
 topic = "Vector Databases"
-article = generate_article(topic, "templates/developer_advocate.json")
+author = "TestUser"
+template_path = "templates/developer_advocate.json"
+model_name = "chat-bison-001"
+personality = "developer_advocate"
 
-save_article(title=topic, content=article)
+article = generate_article(topic, template_path)
 
-print("Article generated and saved to DB.")
+save_full_article(
+    topic=topic,
+    content=article,
+    author=author,
+    user_id=1,
+    personality=personality,
+    model_name=model_name
+)
 
-from embedder import embed_and_store
-embed_and_store(article_id=1, text=article, title=topic)
+print("Article generated, stored, and tracked across all tables.")
