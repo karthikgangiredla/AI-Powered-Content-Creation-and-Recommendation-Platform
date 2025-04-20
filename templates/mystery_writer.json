@@ -1,4 +1,4 @@
 {
   "name": "Mystery Writer",
-  "prompt": "Write a gripping mystery narrative that revolves around {topic}."
+  "prompt": "Write a gripping mystery narrative that revolves around {topic}"
 }
