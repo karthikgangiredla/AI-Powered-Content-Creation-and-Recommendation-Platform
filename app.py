@@ -3,14 +3,11 @@ import requests
 
 st.set_page_config(page_title="AI Content Platform", layout="wide")
 st.title("AI-Powered Content Platform")
-
 st.sidebar.header(" User Login")
 username = st.sidebar.text_input("Username")
 email = st.sidebar.text_input("Email (for signup only)")
 user_id = hash(username) % 10000 if username else None
-
 st.sidebar.markdown("---")
-
 st.header("Generate Article")
 topic = st.text_input("Enter a topic")
 template = st.selectbox("Choose a personality template", [
@@ -55,3 +52,4 @@ if similarity_btn and query:
             st.markdown(f"**{r['title']}** (ID: {r['id']})")
     else:
         st.error(" Failed to fetch similar articles.")
+import math
