@@ -52,4 +52,3 @@ if similarity_btn and query:
             st.markdown(f"**{r['title']}** (ID: {r['id']})")
     else:
         st.error(" Failed to fetch similar articles.")
-import math
