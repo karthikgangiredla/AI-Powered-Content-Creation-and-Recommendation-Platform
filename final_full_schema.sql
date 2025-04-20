@@ -27,14 +27,6 @@ CREATE TABLE IF NOT EXISTS article_revisions (
     FOREIGN KEY (article_id) REFERENCES articles(id)
 );
 
-CREATE TABLE IF NOT EXISTS model_performance (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    model_name VARCHAR(100),
-    personality VARCHAR(100),
-    tokens_used INT,
-    output_length INT,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 CREATE TABLE IF NOT EXISTS user_interactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,4 +36,13 @@ CREATE TABLE IF NOT EXISTS user_interactions (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (article_id) REFERENCES articles(id)
+);
+
+CREATE TABLE IF NOT EXISTS model_performance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    model_name VARCHAR(100),
+    personality VARCHAR(100),
+    tokens_used INT,
+    output_length INT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
