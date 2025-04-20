@@ -11,10 +11,8 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 def generate_article(topic, template_path, model="gemini"):
     template_data = load_template(template_path)
     prompt = template_data["prompt"].replace("{topic}", topic)
-
     model = genai.GenerativeModel("gemini-1.5-pro")
     response = model.generate_content(prompt)
-
     return response.text
 
 def load_template(path):
@@ -23,10 +21,8 @@ def load_template(path):
 
 
 def save_full_article(topic, content, author, personality, model_name, email):
-
     conn = get_connection()
     cursor = conn.cursor()
-
     cursor.execute("SELECT id FROM users WHERE username = %s", (author,))
     user = cursor.fetchone()
     if user:
@@ -34,7 +30,6 @@ def save_full_article(topic, content, author, personality, model_name, email):
     else:
         cursor.execute("INSERT INTO users (username, email) VALUES (%s, %s)", (author, email))
         uid = cursor.lastrowid
-
 
     cursor.execute("""
         INSERT INTO articles (title, content, author)
@@ -59,6 +54,5 @@ def save_full_article(topic, content, author, personality, model_name, email):
 
     conn.commit()
     conn.close()
-
     embed_and_store(article_id=article_id, text=content, title=topic)
     return article_id
