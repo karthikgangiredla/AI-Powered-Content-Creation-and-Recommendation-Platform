@@ -12,6 +12,7 @@ class GenerateRequest(BaseModel):
     username: str
     email: str
 
+
 @app.post("/generate")
 def generate_article_api(req: GenerateRequest):
     article = generate_article(req.topic, req.template)
@@ -22,13 +23,12 @@ def generate_article_api(req: GenerateRequest):
     personality=os.path.basename(req.template).replace(".json", ""),
     model_name="gemini",
     email=req.email)
-
     return {"message": "Article created and stored", "title": req.topic, "content": article}
-
 
 class SimilarRequest(BaseModel):
     query: str
-    top_k: int = 5
+    top_k: int = 2
+
 
 @app.post("/similar")
 def get_similar(req: SimilarRequest):
