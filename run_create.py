@@ -1,9 +1,9 @@
 from content_creator import generate_article, save_full_article
 
-topic = "Vector Databases"
-author = "TestUser"
+topic = "general question"
+author = "karthik"
 template_path = "templates/developer_advocate.json"
-model_name = "chat-bison-001"
+model_name = "gemini"
 personality = "developer_advocate"
 
 article = generate_article(topic, template_path)
