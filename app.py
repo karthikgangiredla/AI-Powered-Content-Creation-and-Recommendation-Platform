@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.set_page_config(page_title="AI Content Platform", layout="wide")
+st.set_page_config(page_title="AI Content Creation Platform", layout="wide")
 st.title("AI-Powered Content Platform")
 st.sidebar.header(" User Login")
 username = st.sidebar.text_input("Username")
@@ -27,7 +27,6 @@ if generate_btn and topic and username:
         "username": username,
         "email": email
     })
-
     if response.ok:
         data = response.json()
         generated_article = data["content"]
@@ -36,18 +35,18 @@ if generate_btn and topic and username:
     else:
         st.error(" Failed to generate article.")
 elif generate_btn and not username:
-    st.warning(" Please enter a username in the sidebar before generating.")
+    st.warning(" Please enter a username before generating.")
 
-st.header("🔍 Find Similar Articles")
+st.header(" Find Similar Articles")
 query = st.text_input("Enter a query to search similar articles")
-top_k = st.slider("Top K", min_value=1, max_value=10, value=5)
+top_k = st.slider("Top K", min_value=1, max_value=10, value=2)
 similarity_btn = st.button("Find Similar", key="similarity_btn")
 
 if similarity_btn and query:
     response = requests.post("http://localhost:8000/similar", json={"query": query, "top_k": top_k})
     if response.ok:
         results = response.json()["results"]
-        st.subheader("🔗 Top Matches:")
+        st.subheader(" Top Matches:")
         for r in results:
             st.markdown(f"**{r['title']}** (ID: {r['id']})")
     else:
