@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-openai
 langchain
 langchain-community
 chromadb
@@ -8,4 +7,4 @@ sentence-transformers
 mysql-connector-python
 python-dotenv
 lamini
-
+google-generativeai
