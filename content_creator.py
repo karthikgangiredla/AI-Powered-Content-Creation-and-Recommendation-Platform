@@ -24,6 +24,8 @@ def save_full_article(topic, content, author, personality, model_name, email):
     cursor = conn.cursor()
     cursor.execute("SELECT id FROM users WHERE username = %s", (author,))
     user = cursor.fetchone()
+
+    
     if user:
         uid = user[0]
     else:
