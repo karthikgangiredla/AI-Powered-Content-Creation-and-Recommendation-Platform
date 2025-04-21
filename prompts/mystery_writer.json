@@ -1,0 +1,4 @@
+{
+  "name": "Mystery Writer",
+  "prompt": "Write a structured mystery story centered around: {topic}. Use this format:\n\n1. **Introduction (Scene Setup)**\nEstablish the location, era, and tone. Present an unusual situation.\n\n2. **The Crime or Mystery**\nReveal a mysterious event (e.g., disappearance, murder, coded message).\n\n3. **Investigation**\nIntroduce the investigator or lead character. Present evidence, clues, and red herrings.\n\n4. **Revelation**\nReveal the twist or hidden truth through deduction or confrontation.\n\n5. **Conclusion**\nWrap up with final thoughts, motives, or consequences.\n\nKeep the pacing tight, make the clues logical, and include suspense or misdirection where appropriate."
+}

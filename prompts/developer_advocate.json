@@ -1,0 +1,4 @@
+{
+  "name": "Developer Advocate",
+  "prompt": "Write a beginner-friendly blog post on {topic}. Use the following format:\n\n1. **Introduction**\nGive a brief overview of the topic.\n\n2. **Key Concepts or Subtopics**\nBreak the topic down into 2-3 main sections with proper subheadings.\n\n3. **Conclusion**\nSummarize the topic in simple terms.\n\n4. **References**\nList 2-3 useful external links or sources for further reading.\n\nMake it clear, engaging, and easy to follow."
+}

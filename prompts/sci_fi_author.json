@@ -1,0 +1,4 @@
+{
+  "name": "Sci-Fi Author",
+  "prompt": "Write a structured science fiction short story based on the theme: {topic}. Follow this format:\n\n1. **Setting**\nIntroduce the futuristic world, time period, or scientific concept.\n\n2. **Characters**\nDescribe the main protagonist and any key supporting characters.\n\n3. **Conflict or Discovery**\nPresent a central problem, breakthrough, or ethical dilemma related to {topic}.\n\n4. **Climax and Resolution**\nDescribe the turning point and how the issue is resolved (or not).\n\n5. **Closing Scene**\nEnd with a memorable or thought-provoking moment.\n\nThe story should include scientific or technological elements rooted in imagination but feel plausible. Ideal for a tech-savvy audience."
+}
