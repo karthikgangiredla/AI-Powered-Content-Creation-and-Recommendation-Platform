@@ -1,55 +1,33 @@
 import streamlit as st
-import requests
+from auth import create_user_table, register_user, authenticate_user
+st.set_page_config(page_title="AI Platform", layout="wide")
+create_user_table()
 
-st.set_page_config(page_title="AI Content Creation Platform", layout="wide")
-st.title("AI-Powered Content Platform")
-st.sidebar.header(" User Login")
-username = st.sidebar.text_input("Username")
-email = st.sidebar.text_input("Email (for signup only)")
-user_id = hash(username) % 10000 if username else None
-st.sidebar.markdown("---")
-st.header("Generate Article")
-topic = st.text_input("Enter a topic")
-template = st.selectbox("Choose a personality template", [
-    "developer_advocate.json",
-    "system_architect.json",
-    "sci_fi_author.json",
-    "mystery_writer.json"
-])
 
-generated_article = None
-generate_btn = st.button("Generate Article", key="generate_btn")
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
 
-if generate_btn and topic and username:
-    response = requests.post("http://localhost:8000/generate", json={
-        "topic": topic,
-        "template": f"templates/{template}",
-        "username": username,
-        "email": email
-    })
-    if response.ok:
-        data = response.json()
-        generated_article = data["content"]
-        st.subheader(data["title"])
-        st.write(generated_article)
-    else:
-        st.error(" Failed to generate article.")
-elif generate_btn and not username:
-    st.warning(" Please enter a username before generating.")
+st.title("🔐 Login or Signup")
 
-st.header(" Find Similar Articles")
-query = st.text_input("Enter a query to search similar articles")
-top_k = st.slider("Top K", min_value=1, max_value=10, value=2)
-similarity_btn = st.button("Find Similar", key="similarity_btn")
+if not st.session_state.authenticated:
+    choice = st.radio("Choose action", ["Login", "Signup"])
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+    email = st.text_input("Email") if choice == "Signup" else ""
 
-if similarity_btn and query:
-    response = requests.post("http://localhost:8000/similar", json={"query": query, "top_k": top_k})
-    if response.ok:
-        results = response.json()["results"]
-        st.subheader(" Top Matches:")
-        for r in results:
-            st.markdown(f"**{r['title']}** (ID: {r['id']})")
-            st.markdown(f"[View Full Article](http://localhost:8000/articles/{r['id']})")
+    if st.button("Submit"):
+        if choice == "Signup":
+            register_user(username, email, password)
+            st.success("User registered! You can now login.")
+        else:
+            if authenticate_user(username, password):
+                st.success(" Logged in successfully!")
+                st.session_state.authenticated = True
+                st.session_state.username = username
+            else:
+                st.error(" Invalid credentials.")
+else:
+    st.success("Welcome! Use the sidebar to navigate pages.")
+st.success("User registered! Please login below.")
 
-    else:
-        st.error(" Failed to fetch similar articles.")
+
