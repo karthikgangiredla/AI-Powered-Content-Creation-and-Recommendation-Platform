@@ -49,5 +49,7 @@ if similarity_btn and query:
         st.subheader(" Top Matches:")
         for r in results:
             st.markdown(f"**{r['title']}** (ID: {r['id']})")
+            st.markdown(f"[View Full Article](http://localhost:8000/articles/{r['id']})")
+
     else:
         st.error(" Failed to fetch similar articles.")
