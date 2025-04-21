@@ -11,10 +11,6 @@ CREATE TABLE IF NOT EXISTS articles (
     title VARCHAR(255),
     content TEXT,
     author VARCHAR(100),
-    version INT DEFAULT 1,
-    views INT DEFAULT 0,
-    likes INT DEFAULT 0,
-    dislikes INT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
