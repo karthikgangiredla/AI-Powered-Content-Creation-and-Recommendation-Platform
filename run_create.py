@@ -2,7 +2,7 @@ from content_creator import generate_article, save_full_article
 
 topic = "general question"
 author = "karthik"
-template_path = "templates/developer_advocate.json"
+template_path = "prompts/developer_advocate.json"
 model_name = "gemini"
 personality = "developer_advocate"
 
