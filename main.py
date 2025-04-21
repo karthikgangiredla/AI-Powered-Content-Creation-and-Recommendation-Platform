@@ -1,17 +1,21 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel
 from content_creator import generate_article, save_full_article
 from embedder import get_similar_articles
 from db_connector import get_connection
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 import os
 
 app = FastAPI()
 
-# --------------------------- REQUEST MODELS ---------------------------
+app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+templates = Jinja2Templates(directory="frontend/templates")
 
 class GenerateRequest(BaseModel):
     topic: str
-    template: str = "templates/developer_advocate.json"
+    template: str = "prompts/developer_advocate.json"
     username: str
     email: str
 
@@ -19,20 +23,32 @@ class SimilarRequest(BaseModel):
     query: str
     top_k: int = 2
 
-# --------------------------- ENDPOINTS ---------------------------
-
 @app.post("/generate")
 def generate_article_api(req: GenerateRequest):
-    article = generate_article(req.topic, req.template)
-    article_id = save_full_article(
-        topic=req.topic,
-        content=article,
-        author=req.username,
-        personality=os.path.basename(req.template).replace(".json", ""),
-        model_name="gemini",
-        email=req.email
-    )
-    return {"message": "Article created and stored", "title": req.topic, "content": article, "article_id": article_id}
+    try:
+        print(f" Received request: {req.dict()}")
+        article = generate_article(req.topic, req.template)
+        print(" Article generated, saving...")
+
+        article_id = save_full_article(
+            topic=req.topic,
+            content=article,
+            author=req.username,
+            personality=os.path.basename(req.template).replace(".json", ""),
+            model_name="gemini",
+            email=req.email
+        )
+        print(" Article saved with ID:", article_id)
+
+        return {
+            "message": "Article created and stored",
+            "title": req.topic,
+            "content": article,
+            "article_id": article_id
+        }
+    except Exception as e:
+        print(" ERROR in /generate:", e)
+        raise HTTPException(status_code=500, detail=f"Generation failed: {str(e)}")
 
 
 @app.post("/similar")
@@ -64,6 +80,7 @@ def get_article(article_id: int):
         "author": result[3],
         "created_at": result[4]
     }
+
 @app.get("/debug/articles")
 def debug_articles():
     conn = get_connection()
@@ -72,3 +89,23 @@ def debug_articles():
     rows = cursor.fetchall()
     conn.close()
     return [{"id": row[0], "title": row[1]} for row in rows]
+
+@app.get("/articles/{article_id}/html", response_class=HTMLResponse)
+def view_article_html(article_id: int, request: Request):
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM articles WHERE id = %s", (article_id,))
+    article = cursor.fetchone()
+    conn.close()
+
+    if not article:
+        return HTMLResponse("<h2>Article not found</h2>", status_code=404)
+
+    return templates.TemplateResponse("article.html", {
+        "request": request,
+        "title": article["title"],
+        "content": article["content"],
+        "author": article["author"]
+    })
+
+
