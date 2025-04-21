@@ -4,16 +4,21 @@ from dotenv import load_dotenv
 import google.generativeai as genai
 from embedder import embed_and_store
 from db_connector import get_connection
-
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 def generate_article(topic, template_path, model="gemini"):
-    template_data = load_template(template_path)
-    prompt = template_data["prompt"].replace("{topic}", topic)
-    model = genai.GenerativeModel("gemini-1.5-pro")
-    response = model.generate_content(prompt)
-    return response.text
+    try:
+        template_data = load_template(template_path)
+        prompt = template_data["prompt"].replace("{topic}", topic)
+        model = genai.GenerativeModel("gemini-1.5-pro")
+        response = model.generate_content(prompt)
+        if hasattr(response, "text"):
+            return response.text
+        else:
+            raise Exception("Gemini did not return a response text")
+    except Exception as e:
+        raise
 
 def load_template(path):
     with open(path, "r") as f:
