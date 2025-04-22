@@ -48,20 +48,12 @@ if generate_btn and topic:
         st.subheader(data["title"])
         st.write(generated_article)
         st.success(" Article generated successfully!")
-        # Show similar articles
+        
         sim_response = requests.post("http://localhost:8000/similar", json={
             "query": generated_article,
             "top_k": 3
         })
 
-        if sim_response.ok:
-            st.subheader("🔍 Similar Articles:")
-            for r in sim_response.json()["results"]:
-                sim_url = f"http://localhost:8000/articles/{r['id']}/html"
-                st.markdown(f"**{r['title']}** (ID: {r['id']})")
-                st.markdown(f"[View Full Article]({sim_url})", unsafe_allow_html=True)
-        else:
-            st.warning(" Could not fetch similar articles.")
     else:
         st.error(" Failed to generate article.")
 elif generate_btn:
