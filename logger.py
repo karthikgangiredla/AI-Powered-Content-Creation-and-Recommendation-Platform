@@ -29,17 +29,12 @@ class MySQLHandler(logging.Handler):
         except Exception as e:
             print(f"Failed to log to DB: {e}")
 
-# Setup the logger
 logger = logging.getLogger("ai_content_platform")
 logger.setLevel(logging.DEBUG)
 
-# Console handler
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
 
-
-
-# MySQL handler
 mysql_handler = MySQLHandler(
     host="localhost",
     user=os.getenv("DB_USER"),   
@@ -48,11 +43,9 @@ mysql_handler = MySQLHandler(
 )
 mysql_handler.setLevel(logging.INFO)
 
-# Formatter
 formatter = logging.Formatter('[%(asctime)s] %(levelname)s in %(module)s: %(message)s')
 console_handler.setFormatter(formatter)
 mysql_handler.setFormatter(formatter)
 
-# Add handlers
 logger.addHandler(console_handler)
 logger.addHandler(mysql_handler)
