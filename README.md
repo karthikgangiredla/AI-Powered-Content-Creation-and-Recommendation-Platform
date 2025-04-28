@@ -120,6 +120,13 @@ streamlit run app.py
 
 ![alt text](<Screenshot 2025-04-26 112425.png>)
 
+
+### Content Creation Page
+![alt text](<Screenshot 2025-04-26 112605.png>)
+
+### Suggest Content page
+![alt text](<Screenshot 2025-04-26 112652.png>)
+![alt text](<Screenshot 2025-04-26 112704.png>)
 ---
 
 ##  Versioning & Embeddings
