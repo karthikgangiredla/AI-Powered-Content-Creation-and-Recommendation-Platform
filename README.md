@@ -116,6 +116,10 @@ uvicorn main:app --reload
 streamlit run app.py
 ```
 
+### Login Page
+
+![alt text](<Screenshot 2025-04-26 112425.png>)
+
 ---
 
 ##  Versioning & Embeddings
