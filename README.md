@@ -7,7 +7,7 @@ An end-to-end intelligent content platform that leverages Large Language Models 
 ##  Features
 
 ###  Content Creation
-- Generate articles using `Gemini` (default) or `Falcon` LLMs
+- Generate articles using `Gemini` LLM
 - Choose personality templates like:
   - Developer Advocate
   - System Architect
@@ -46,7 +46,7 @@ An end-to-end intelligent content platform that leverages Large Language Models 
 ##  Tech Stack
 - **Frontend**: Streamlit
 - **Backend**: FastAPI
-- **LLMs**: Gemini (Google), Falcon
+- **LLMs**: Gemini (Google)
 - **Embeddings**: Sentence-Transformers
 - **Database**: MySQL
 - **Vector Store**: ChromaDB
